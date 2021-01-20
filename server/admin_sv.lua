@@ -298,7 +298,7 @@ AddEventHandler('playerDropped', function()
 end)
 
 function sendDisc (webhook, name, image, message, color)
-    local webhook   = ""
+    local webhook   = "YOUR_WEBHOOK_HERE"
     local avatar     = Config.Avatar
     local embeds = {
         {
