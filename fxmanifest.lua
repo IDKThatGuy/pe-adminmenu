@@ -13,8 +13,6 @@ client_scripts {
     'client/admin_cl.lua',
     'client/entityiter.lua',
     'locales/es.lua',
-    'locales/fr.lua',
-    'locales/br.lua',
     'locales/en.lua',
     'config.lua'
 }
@@ -23,8 +21,6 @@ server_scripts {
     '@es_extended/locale.lua',
     'server/admin_sv.lua',
     'locales/es.lua',
-    'locales/fr.lua',
-    'locales/br.lua',
     'locales/en.lua',
     'config.lua'
 }
