@@ -211,18 +211,14 @@ function AbrirMenuAdministrativo()
 						title = _U('ped'),
 					}, function(menuData, menuHandle)
 						local pedModel = menuData.value
-		  
+									
 						if not type(pedModel) == "number" then pedModel = 'pedModel' end
-							
 						if IsModelInCdimage(pedModel) then
 							while not HasModelLoaded(pedModel) do
 								Citizen.Wait(15)
-		  
 								RequestModel(pedModel)
 							end
-		  
 							SetPlayerModel(PlayerId(), pedModel)
-							
 							menuHandle.close()
 						else
 							exports['t-notify']:Alert({
