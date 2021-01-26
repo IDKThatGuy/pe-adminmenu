@@ -44,6 +44,7 @@ Locales['es'] = {
   ['heal']                = 'Curarse',
   ['fix']                 = 'Reparar',
   ['coords']              = 'Coordenadas',
+  ['ped']                 = 'Cambiar ped',
   ['inv']                 = 'Invisible',
 
   --TP
@@ -98,6 +99,7 @@ Locales['es'] = {
   ['bring_admin']         = '✔️ | Has traido a %s',
   ['goto_player']         = '✔️ | Un administrador se ha teletransportado a ti.',
   ['goto_admin']          = '✔️ | Te has teletransportado a %s',
+  ['ped_false']           = '❌ | Ped no encontrado. \nPed escogido: ',
   
   ['delallveh_true']      = '✔️ | Has borrado todos los coches',
   ['delallobj_true']      = '✔️ | Has borrado todos los objetos',
