@@ -163,6 +163,7 @@ function AbrirMenuAdministrativo()
 				{label = _U('dv'), value = 'dv'},
 				{label = _U('fix'), value = 'fix'},
 				{label = _U('heal'), value = 'heal'},
+				{label = _U('ped'), value = 'ped'},
 				{label = _U('coords'), value = 'coords'}
 			}
 
@@ -204,7 +205,34 @@ function AbrirMenuAdministrativo()
 				elseif accion == 'fix' then
 					TriggerEvent( 'PE-admin:repairVehicle')
 				elseif accion == 'coords' then
-                    TriggerEvent( 'PE-admin:coords')
+					TriggerEvent( 'PE-admin:coords')
+				elseif accion == 'ped' then
+					ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "ped_menu", {
+						title = _U('ped'),
+					}, function(menuData, menuHandle)
+						local pedModel = menuData.value
+		  
+						if not type(pedModel) == "number" then pedModel = 'pedModel' end
+							
+						if IsModelInCdimage(pedModel) then
+							while not HasModelLoaded(pedModel) do
+								Citizen.Wait(15)
+		  
+								RequestModel(pedModel)
+							end
+		  
+							SetPlayerModel(PlayerId(), pedModel)
+							
+							menuHandle.close()
+						else
+							exports['t-notify']:Alert({
+								style  =  'info',
+								message  =  _U('ped_false') .. pedModel
+							})
+						end
+					end, function(menuData, menuHandle)
+						menuHandle.close()
+					end)
 				elseif accion == 'inv' then
                     TriggerEvent('PE-admin:invisible')
 				end
