@@ -44,6 +44,7 @@ Locales['en'] = {
   ['heal']                = 'Heal',
   ['fix']                 = 'Fix',
   ['coords']              = 'Coords',
+  ['ped']                 = 'Change ped',
   ['inv']                 = 'Invisible',
 
   --TP
@@ -98,6 +99,7 @@ Locales['en'] = {
   ['bring_admin']         = '✔️ | You have brought %s',
   ['goto_player']         = '✔️ | A admin has teleported to you.',
   ['goto_admin']          = '✔️ | You have teleported to %s',
+  ['ped_false']           = '❌ | No ped found. \nPed model chosen: ',
   
   ['delallveh_true']      = '✔️ | All cars have been erased',
   ['delallobj_true']      = '✔️ | All objects have been erased',
