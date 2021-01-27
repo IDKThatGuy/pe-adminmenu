@@ -74,6 +74,8 @@ If you find any issues with this please make sure to report them.
 * 1.7
     * Added more webhooks
     * Added goto and bring (ali-exacute)
+* 1.8
+    * Added a ped menu for admins as ROCKO ordered
     
 ## Acknowledgments
 
