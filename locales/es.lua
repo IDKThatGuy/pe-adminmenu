@@ -28,6 +28,7 @@ Locales['es'] = {
   ['del_veh_time']        = 'Borrado de coches (10min)',
   ['del_veh']             = 'Borrado de coches (insta)',
   ['del_obj']             = 'Borrado de objetos (insta)',
+  ['del_ped']             = 'Borrado de peds (insta)',
   ['del_chat']            = 'Borrado del chat',
   ['ten_min']             = 'Anuncio reinicio (10min)',
   ['kick_all']            = 'Kickear a todos',
