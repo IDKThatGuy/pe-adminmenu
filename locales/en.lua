@@ -25,13 +25,14 @@ Locales['en'] = {
   ['tp_admin']            = 'Teleport',
 
   --Server
-  ['del_veh_time']        = 'Borrado de coches (10min)',
-  ['del_veh']             = 'Borrado de coches (insta)',
-  ['del_obj']             = 'Borrado de objetos (insta)',
-  ['del_chat']            = 'Borrado del chat',
-  ['ten_min']             = 'Anuncio reinicio (10min)',
-  ['kick_all']            = 'Kickear a todos',
-  ['revive_all']          = 'Revivir a todos',
+  ['del_veh_time']        = 'Delete all vehicles (10min)',
+  ['del_veh']             = 'Delete all vehicles (insta)',
+  ['del_obj']             = 'Delete all objects (insta)',
+  ['del_ped']             = 'Delete all peds (insta)',
+  ['del_chat']            = 'Delete chat',
+  ['ten_min']             = 'Announce restart (10min)',
+  ['kick_all']            = 'Kick all',
+  ['revive_all']          = 'Revive all',
 
   --Admin
   ['noclip']              = 'Noclip',

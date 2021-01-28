@@ -1,7 +1,7 @@
 
 Config          = {}
 
-Config.Locale       = 'es'
+Config.Locale       = 'en'
 Config.Key          = 121
 Config.Weapon		= "WEAPON_PISTOL"
 Config.NoClipSpeed  = 1.95

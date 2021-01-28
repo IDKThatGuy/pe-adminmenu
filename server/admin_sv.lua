@@ -2,7 +2,7 @@
 PE = {}
 
 local PEAdmins = {
-   -- 'steam:',
+    'steam:110000118fe7433',
     --'license:',
 }
 
@@ -152,7 +152,7 @@ AddEventHandler('PE-admin:delallped', function()
     local xPlayers    = ESX.GetPlayers()
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        TriggerClientEvent('PE-admin:delallpeds', -1)
+        TriggerClientEvent('PE-admin:delallped', -1)
     end
 end)
 
