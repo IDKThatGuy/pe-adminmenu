@@ -157,7 +157,6 @@ function AbrirMenuAdministrativo()
 				{label = _U('god'), value = 'god'},
 				{label = _U('inv'), value = 'inv'},
 				{label = _U('tp'), value = 'tp'},
-				{label = _U('heal'), value = 'heal'},
 				{label = _U('spawnveh'), value = 'spawnveh'},
 				{label = _U('tpveh'), value = 'tpveh'},
 				{label = _U('dv'), value = 'dv'},
