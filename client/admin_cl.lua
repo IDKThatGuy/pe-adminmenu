@@ -116,6 +116,7 @@ function AbrirMenuAdministrativo()
 				{label = _U('del_veh_time'), value = 'del_veh_time'},
 				{label = _U('del_veh'), value = 'del_veh'},
 				{label = _U('del_obj'), value = 'del_obj'},
+				{label = _U('del_ped'), value = 'del_ped'},
 				{label = _U('del_chat'), value = 'del_chat'},
 				{label = _U('ten_min'), value = 'ten_min'},
 				{label = _U('kick_all'), value = 'kick_all'},
@@ -138,6 +139,8 @@ function AbrirMenuAdministrativo()
 					TriggerServerEvent('PE-admin:delallvehtime')
 				elseif accion == 'del_obj' then
 					TriggerServerEvent('PE-admin:delallobj')
+				elseif accion == 'del_ped' then
+					TriggerServerEvent('PE-admin:delallped')
 				elseif accion == 'del_chat' then
 					TriggerServerEvent('PE-admin:clearchat')
 				elseif accion == 'ten_min' then
@@ -706,6 +709,16 @@ AddEventHandler("PE-admin:delallobj", function ()
 			DeleteObject(object)
 		end
     end
+end)
+
+RegisterNetEvent("PE-admin:delallped")
+AddEventHandler("PE-admin:delallped", function ()
+	for ped in EnumeratePeds() do
+		if not (IsPedAPlayer(ped))then
+			DeleteEntity(ped)
+			RemoveAllPedWeapons(ped, true)
+		end
+	end
 end)
 
 RegisterNetEvent("PE-admin:freezePlayer")
