@@ -76,6 +76,8 @@ If you find any issues with this please make sure to report them.
     * Added goto and bring (ali-exacute)
 * 1.8
     * Added a ped menu for admins as ROCKO ordered
+* 1.9
+    * Added a delete all peds
     
 ## Acknowledgments
 
