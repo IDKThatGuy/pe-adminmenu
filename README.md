@@ -78,6 +78,8 @@ If you find any issues with this please make sure to report them.
     * Added a ped menu for admins as ROCKO ordered
 * 1.9
     * Added a delete all peds
+* 2.0
+    * T-Notify is no longer a dependcy, but instead optional
     
 ## Acknowledgments
 
