@@ -509,7 +509,6 @@ function GoVeh()
 	elseif (CloseVeh == 0) and (CloseAir ~= 0) then
 		if IsVehicleSeatFree(CloseAir, -1) then
 			SetPedIntoVehicle(playerPed, CloseAir, -1)
-			SetVehicleAlarm(CloseAir, false)
 			SetVehicleDoorsLocked(CloseAir, 1)
 			SetVehicleNeedsToBeHotwired(CloseAir, false)
 			Citizen.Wait(1)
@@ -519,7 +518,6 @@ function GoVeh()
 			SetEntityAsMissionEntity(driverPed, 1, 1)
 			DeleteEntity(driverPed)
 			SetPedIntoVehicle(playerPed, CloseAir, -1)
-			SetVehicleAlarm(CloseAir, false)
 			SetVehicleDoorsLocked(CloseAir, 1)
 			SetVehicleNeedsToBeHotwired(CloseAir, false)
 			Citizen.Wait(1)
@@ -535,7 +533,6 @@ function GoVeh()
 	elseif (CloseVeh ~= 0) and (CloseAir == 0) then
 		if IsVehicleSeatFree(CloseVeh, -1) then
 			SetPedIntoVehicle(playerPed, CloseVeh, -1)
-			SetVehicleAlarm(CloseVeh, false)
 			SetVehicleDoorsLocked(CloseVeh, 1)
 			SetVehicleNeedsToBeHotwired(CloseVeh, false)
 			Citizen.Wait(1)
@@ -545,7 +542,6 @@ function GoVeh()
 			SetEntityAsMissionEntity(driverPed, 1, 1)
 			DeleteEntity(driverPed)
 			SetPedIntoVehicle(playerPed, CloseVeh, -1)
-			SetVehicleAlarm(CloseVeh, false)
 			SetVehicleDoorsLocked(CloseVeh, 1)
 			SetVehicleNeedsToBeHotwired(CloseVeh, false)
 			Citizen.Wait(1)
@@ -897,20 +893,28 @@ AddEventHandler("PE-admin:coords", function()
 	coords = not coords
 	local x = GetEntityCoords(PlayerPedId())
 	if coords == true then
-		exports['t-notify']:Persist({
-			id = '12',
-			step = 'start',
-			options = {
-				style = 'info',
-				message = tostring(x),
-				title = _U('coords')
-			}
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Persist({
+				id = '12',
+				step = 'start',
+				options = {
+					style = 'info',
+					message = tostring(x),
+					title = _U('coords')
+				}
+			})
+		elseif Config.ESX then
+			ESX.ShowHelpNotification(tostring(x), true, true)
+		end
 	else
-		exports['t-notify']:Persist({
-			id = '12',
-			step = 'end'
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Persist({
+				id = '12',
+				step = 'end'
+			})
+		elseif Config.ESX then
+			ESX.ShowHelpNotification(tostring(x), true, true)
+		end
     end
 end)
 
@@ -919,4 +923,5 @@ AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         ESX.UI.Menu.CloseAll()
     end
+end)
 end)
