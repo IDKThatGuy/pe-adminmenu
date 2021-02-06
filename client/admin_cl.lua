@@ -924,4 +924,3 @@ AddEventHandler('onResourceStop', function(resource)
         ESX.UI.Menu.CloseAll()
     end
 end)
-end)
