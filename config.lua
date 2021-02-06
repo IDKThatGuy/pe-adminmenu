@@ -2,7 +2,7 @@
 Config          = {}
 
 Config.Locale       = 'en'
-Config.Key          = 121
+Config.Key          = 121 -- Key to open the menu. See here: https://docs.fivem.net/docs/game-references/controls/
 Config.Weapon		= "WEAPON_PISTOL"
 Config.NoClipSpeed  = 1.95
 Config.MenuAlign    = 'right'
