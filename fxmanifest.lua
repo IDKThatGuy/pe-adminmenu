@@ -24,7 +24,3 @@ server_scripts {
     'locales/en.lua',
     'config.lua'
 }
-
-dependencies {
-    't-notify'
-}

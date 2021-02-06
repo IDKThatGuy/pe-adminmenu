@@ -5,6 +5,11 @@ Config.Locale       = 'en'
 Config.Key          = 121
 Config.Weapon		= "WEAPON_PISTOL"
 Config.NoClipSpeed  = 1.95
+Config.MenuAlign    = 'right'
+
+-- Type of Notification
+Config.ESX          = true
+Config.Tnotify      = false
 
 Config.Icon         = "https://i.imgur.com/RI8z5GG.png"
 Config.Avatar       = "https://i.imgur.com/RI8z5GG.png"

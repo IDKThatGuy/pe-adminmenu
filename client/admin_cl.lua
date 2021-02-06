@@ -34,25 +34,33 @@ end
 
 RegisterNetEvent('PE-admin:checkAdmin')
 AddEventHandler('PE-admin:checkAdmin', function(state)
-    isAdmin = state 
+    isAdmin = state
 end)
 
 
 Citizen.CreateThread(function()
-    while true do 
+    while true do
         Citizen.Wait(12)
 		if IsControlJustReleased(0, Config.Key) and isAdmin then 
+			if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style = 'warning', 
 				message = _U('admin_menu')
 			})
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('admin_menu'), false, false, 0)
+			end
 			AbrirMenuAdministrativo()
-		elseif IsControlJustReleased(0, Config.Key) and not isAdmin then 
+		elseif IsControlJustReleased(0, Config.Key) and not isAdmin then
+			if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style = 'error', 
 				message = _U('perms_false')
 			})
-		end 
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('perms_false'), false, false, 0)
+			end
+		end
 		--Why not just put the local here? For optimization
         if PE_noclip then
             local ped = PlayerPedId()
@@ -86,7 +94,7 @@ Citizen.CreateThread(function()
                 x = x + speed * px
                 y = y + speed * py
                 z = z + speed * pz
-  
+
 			elseif IsControlPressed(0, 33) then
                 x = x - speed * px
                 y = y - speed * py
@@ -101,10 +109,10 @@ end)
 
 function AbrirMenuAdministrativo()
 	ESX.UI.Menu.CloseAll()
-	
+
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'admin_actions', {
 		title    = _U('admin_menu_top'),
-		align    = 'right',
+		align    = Config.MenuAlign,
 		elements = {
 			{label = _U('server_admin'), value = 'server_admin'},
             {label = _U('admin_admin'), value = 'admin_admin'},
@@ -122,19 +130,23 @@ function AbrirMenuAdministrativo()
 				{label = _U('kick_all'), value = 'kick_all'},
 				{label = _U('revive_all'), value = 'revive_all'}
             }
-            
+
 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'server_admin', {
 				title    = _U('server_admin'),
-				align    = 'right',
+				align    = Config.MenuAlign,
 				elements = elements
 			}, function(data2, menu2)
 				local accion = data2.current.value
 				if accion == 'del_veh' then
 					TriggerServerEvent('PE-admin:delallveh')
+					if Config.Tnotify then
 					exports['t-notify']:Alert({
 						style  =  'success',
 						message  =  _U('delallveh_true')
 					})
+					elseif Config.ESX then
+						ESX.ShowNotification(_U('delallveh_true'), false, false, 0)
+					end
 				elseif accion == 'del_veh_time' then
 					TriggerServerEvent('PE-admin:delallvehtime')
 				elseif accion == 'del_obj' then
@@ -171,7 +183,7 @@ function AbrirMenuAdministrativo()
 
 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'admin_admin', {
 				title    = _U('admin_admin'),
-				align    = 'right',
+				align    = Config.MenuAlign,
 				elements = elements
 			}, function(data2, menu2)
 				local accion = data2.current.value
@@ -192,10 +204,14 @@ function AbrirMenuAdministrativo()
 					}, function(data, menu)
 						local parameter = data.value
 						TriggerEvent('esx:spawnVehicle', parameter)
-						exports['t-notify']:Alert({
-							style  =  'info',
-							message  =  _U('spawn_true') ..parameter
-						})
+						if Config.Tnotify then
+							exports['t-notify']:Alert({
+								style  =  'info',
+								message  =  _U('spawn_true') .. parameter
+							})
+						elseif Config.ESX then
+							ESX.ShowNotification(_U('spawn_true') .. parameter, false, false, 0)
+						end
 						menu.close()
 					end, function(data, menu)
 						menu.close()
@@ -209,7 +225,7 @@ function AbrirMenuAdministrativo()
 				elseif accion == 'coords' then
 					TriggerEvent( 'PE-admin:coords')
 				elseif accion == 'ped' then
-					ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "ped_menu", {
+					ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), 'ped_menu', {
 						title = _U('ped'),
 					}, function(menuData, menuHandle)
 						local pedModel = menuData.value
@@ -223,10 +239,14 @@ function AbrirMenuAdministrativo()
 							SetPlayerModel(PlayerId(), pedModel)
 							menuHandle.close()
 						else
+							if Config.Tnotify then
 							exports['t-notify']:Alert({
 								style  =  'info',
 								message  =  _U('ped_false') .. pedModel
 							})
+							elseif Config.ESX then
+								ESX.ShowNotification(_U('ped_false'), false, false, 0)
+							end
 						end
 					end, function(menuData, menuHandle)
 						menuHandle.close()
@@ -250,13 +270,13 @@ function AbrirMenuAdministrativo()
 				end
 				ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'player_list', {
 					title    = _U('player_list'),
-					align    = 'right',
+					align    = Config.MenuAlign,
 					elements = elements
 				}, function(data2, menu2)
 		
 					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'player_name', {
 						title    = _U('player_name', data2.current.value),
-						align    = 'right',
+						align    = Config.MenuAlign,
 						elements = {
 							{label = _U('freeze'), value = 'freeze'},
 							{label = _U('revive_player'), value = 'revive_player'},
@@ -314,7 +334,7 @@ function AbrirMenuAdministrativo()
 			}
 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'tp_admin', {
 				title    = _U('tp_admin'),
-				align    = 'right',
+				align    = Config.MenuAlign,
 				elements = elements
 			}, function(data2, menu2)
 				local accion = data2.current.value
@@ -376,10 +396,14 @@ function stNoti()
 	local stHash = GetStreetNameAtCoord(x, y, z)
 	if stHash ~= nil then
 		stName = GetStreetNameFromHashKey(stHash)
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('tp_noti' ) .. stName
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('tp_noti' ) .. stName
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('tp_noti') .. stName, false, false, 0)
+		end
 	end
 end
 
@@ -425,21 +449,33 @@ TPtoMarker = function()
                 end
 				Citizen.Wait(10)
             end
+			if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'success',
 				message  =  _U('tp_true')
 			})
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('tp_true'), false, false, 0)
+			end
         else
-			exports['t-notify']:Alert({
-				style  =  'info',
-				message  =  _U('tp_false')
-			})
+			if Config.Tnotify then
+				exports['t-notify']:Alert({
+					style  =  'info',
+					message  =  _U('tp_false')
+				})
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('tp_false'), false, false, 0)
+			end
         end
 	else
+		if Config.Tnotify then
 		exports['t-notify']:Alert({
 			style  =  'error',
 			message = _U('user_perms')
 		})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('user_perms'), false, false, 0)
+		end
     end
 end
 
@@ -451,17 +487,25 @@ function GoVeh()
 	local CloseVehPos = GetEntityCoords(CloseVeh, true)
 	local CloseAir = GetClosestVehicle(GetEntityCoords(playerPed, true), 1000.0, 0, 10000)
 	local CloseAirPos = GetEntityCoords(CloseAir, true)
+	if Config.Tnotify then
 		exports['t-notify']:Alert({
 			style  =  'info',
 			message  =  _U('veh_wait'),
 			duration = 1200
 		})
-		Citizen.Wait(1600)
+	elseif Config.ESX then
+		ESX.ShowNotification(_U('veh_wait'), false, false, 0)
+	end
+	Citizen.Wait(1600)
 	if (CloseVeh == 0) and (CloseAir == 0) then
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('veh_false')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('veh_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('veh_false'), false, false, 0)
+		end
 	elseif (CloseVeh == 0) and (CloseAir ~= 0) then
 		if IsVehicleSeatFree(CloseAir, -1) then
 			SetPedIntoVehicle(playerPed, CloseAir, -1)
@@ -480,10 +524,14 @@ function GoVeh()
 			SetVehicleNeedsToBeHotwired(CloseAir, false)
 			Citizen.Wait(1)
 		end
+		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'success',
 				message  =  _U('veh_true')
 			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('veh_true'), false, false, 0)
+		end
 	elseif (CloseVeh ~= 0) and (CloseAir == 0) then
 		if IsVehicleSeatFree(CloseVeh, -1) then
 			SetPedIntoVehicle(playerPed, CloseVeh, -1)
@@ -502,10 +550,14 @@ function GoVeh()
 			SetVehicleNeedsToBeHotwired(CloseVeh, false)
 			Citizen.Wait(1)
 		end
+		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'success',
 				message  =  _U('veh_true')
 			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('veh_true'), false, false, 0)
+		end
 	elseif (CloseVeh ~= 0) and (CloseAir ~= 0) then
 		if Vdist(CloseVehPos.x, CloseVehPos.y, CloseVehPos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) < Vdist(CloseAirPos.x, CloseAirPos.y, CloseAirPos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) then
 			if IsVehicleSeatFree(CloseVeh, -1) then
@@ -544,10 +596,14 @@ function GoVeh()
 				Citizen.Wait(1)
 			end
 		end
+		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'success',
 				message  =  _U('veh_true')
 			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('veh_true'), false, false, 0)
+		end
 		Citizen.Wait(1)	
 	end
 end
@@ -558,16 +614,24 @@ AddEventHandler('PE-admin:noclipveh',function()
 	PE_noclipveh = not PE_noclipveh
     local ped = GetVehiclePedIsIn(PlayerPedId(), false)
 
-    if PE_noclipveh == true then 
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('noclip_true')
-		})
+    if PE_noclipveh == true then
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('noclip_true')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('noclip_true'), false, false, 0)
+		end
     else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('noclip_false')
-		})	
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('noclip_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('noclip_false'), false, false, 0)
+		end
     end
 end)
 
@@ -576,16 +640,24 @@ AddEventHandler('PE-admin:noclip',function()
 	PE_noclip = not PE_noclip
     local ped = PlayerPedId()
 
-    if PE_noclip == true then 
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('noclip_true')
-		})
+    if PE_noclip == true then
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('noclip_true')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('noclip_true'), false, false, 0)
+		end
     else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('noclip_false')
-		})	
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('noclip_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('noclip_false'), false, false, 0)
+		end
     end
 end)
 
@@ -594,16 +666,24 @@ AddEventHandler('PE-admin:invisible', function()
 	PE_invisible = not PE_invisible
     local ped = PlayerPedId()
     SetEntityVisible(ped, not PE_invisible, false)
-    if PE_invisible == true then 
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('inv_true')
-		})
+    if PE_invisible == true then
+			if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('inv_true')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('inv_true'), false, false, 0)
+		end
     else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('inv_false')
-		})	
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('inv_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('inv_false'), false, false, 0)
+		end
     end
 end)
 
@@ -613,15 +693,23 @@ AddEventHandler('PE-admin:god', function()
 	local playerPed = PlayerPedId()
 	SetEntityInvincible(playerPed, not PE_god, true)
 	if PE_god == true then
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('god_false')
-		})		
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('god_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('god_false'), false, false, 0)
+		end
 	else
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('god_true')
-		})		
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('god_true')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('god_true'), false, false, 0)
+		end
 	end
 end)
 
@@ -636,33 +724,49 @@ AddEventHandler('PE-admin:healPlayer', function()
 			ClearPedBloodDamage(PE_ped)
         	ResetPedVisibleDamage(PE_ped)
 			ClearPedLastWeaponDamage(PE_ped)
-			exports['t-notify']:Alert({
-				style  =  'success',
-				message  =  _U('heal_true')
-			})
+			if Config.Tnotify then
+				exports['t-notify']:Alert({
+					style  =  'success',
+					message  =  _U('heal_true')
+				})
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('heal_true'), false, false, 0)
+			end
 		elseif PE_heal == false then
 			SetEntityHealth(PE_ped, 200)
 			SetPedArmour(PE_ped, 0)
-			exports['t-notify']:Alert({
-				style  =  'warning',
-				message  =  _U('heal_false')
-			})
+			if Config.Tnotify then
+				exports['t-notify']:Alert({
+					style  =  'warning',
+					message  =  _U('heal_false')
+				})
+			elseif Config.ESX then
+				ESX.ShowNotification(_U('heal_false'), false, false, 0)
+			end
 		end
     else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('user_perms')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('user_perms')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('user_perms'), false, false, 0)
+		end
     end
 end)
 
 RegisterNetEvent("PE-admin:clearchat")
 AddEventHandler("PE-admin:clearchat", function()
     TriggerEvent('chat:clear', -1)
-	exports['t-notify']:Alert({
-		style  =  'info',
-		message  =  _U('chat_false')
-	})
+	if Config.Tnotify then
+		exports['t-notify']:Alert({
+			style  =  'info',
+			message  =  _U('chat_false')
+		})
+	elseif Config.ESX then
+		ESX.ShowNotification(_U('chat_false'), false, false, 0)
+	end
 end)
 
 RegisterNetEvent('PE-admin:repairVehicle')
@@ -674,15 +778,23 @@ AddEventHandler('PE-admin:repairVehicle', function()
         SetVehicleDeformationFixed(plyVeh)
         SetVehicleUndriveable(plyVeh, false)
 		SetVehicleEngineOn(plyVeh, true, true)
-		exports['t-notify']:Alert({
-			style  =  'success',
-			message  =  _U('fix_true')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'success',
+				message  =  _U('fix_true')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('fix_true'), false, false, 0)
+		end
     else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  =  _U('fix_false')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  =  _U('fix_false')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('fix_false'), false, false, 0)
+		end
     end
 end)
 
@@ -703,7 +815,7 @@ end)
 RegisterNetEvent("PE-admin:delallobj")
 AddEventHandler("PE-admin:delallobj", function ()
 	for object in EnumerateObjects() do
-        SetEntityAsMissionEntity(object, false, false) 
+        SetEntityAsMissionEntity(object, false, false)
 		DeleteObject(object)
 		if (DoesEntityExist(object)) then 
 			DeleteObject(object)
@@ -722,7 +834,7 @@ AddEventHandler("PE-admin:delallped", function ()
 end)
 
 RegisterNetEvent("PE-admin:freezePlayer")
-AddEventHandler("PE-admin:freezePlayer", function(input)
+AddEventHandler("PE-admin:freezePlayer", function()
 	freeze = not freeze
 	local ped = PlayerPedId()
     if freeze == true then
@@ -739,41 +851,49 @@ AddEventHandler("PE-admin:freezePlayer", function(input)
 end)
 
 RegisterNetEvent('PE-admin:revivePlayer')
-AddEventHandler('PE-admin:revivePlayer', function(input)
+AddEventHandler('PE-admin:revivePlayer', function()
 	local ped = PlayerPedId()
 	local player = IsPedFatallyInjured(ped)
 	if player then
 		TriggerEvent('esx_ambulancejob:revive')
 	else
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  = _U('not_dead')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  = _U('not_dead')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('not_dead'), false, false, 0)
+		end
     end
 end)
 
 RegisterNetEvent('PE-admin:killPlayer')
-AddEventHandler('PE-admin:killPlayer', function(input)
+AddEventHandler('PE-admin:killPlayer', function()
 	local ped = PlayerPedId()
 	local player = IsPedDeadOrDying(ped, p1)
 	if player then
-		exports['t-notify']:Alert({
-			style  =  'error',
-			message  = _U('not_alive')
-		})
+		if Config.Tnotify then
+			exports['t-notify']:Alert({
+				style  =  'error',
+				message  = _U('not_alive')
+			})
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('not_alive'), false, false, 0)
+		end
 	else
 		SetEntityHealth(ped, 0)
     end
 end)
 
 RegisterNetEvent('PE-admin:weaponPlayer')
-AddEventHandler('PE-admin:weaponPlayer', function(input)
+AddEventHandler('PE-admin:weaponPlayer', function()
 	local ped = PlayerPedId()
 	GiveWeaponToPed(ped, Config.Weapon, 250, true, true)
 end)
 
 RegisterNetEvent("PE-admin:coords")
-AddEventHandler("PE-admin:coords", function(input)
+AddEventHandler("PE-admin:coords", function()
 	coords = not coords
 	local x = GetEntityCoords(PlayerPedId())
 	if coords == true then
@@ -786,7 +906,6 @@ AddEventHandler("PE-admin:coords", function(input)
 				title = _U('coords')
 			}
 		})
-		
 	else
 		exports['t-notify']:Persist({
 			id = '12',
