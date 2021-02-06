@@ -15,7 +15,7 @@ An admin menu created with esx_menu_default that allows gives you admin commands
 
 ### Dependencies
 
-* [T-notify](https://github.com/TasoOneAsia/t-notify)
+* [T-notify](https://github.com/TasoOneAsia/t-notify/releases/)
 
 ### Installing
 
