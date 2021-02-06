@@ -70,11 +70,15 @@ end)
 RegisterCommand("admin", function(source, args, rawCommand)
 	if source ~= 0 then
 		local xPlayer = ESX.GetPlayerFromId(source)
-        TriggerClientEvent('t-notify:client:Custom', source, {
-            style  =  'info',
-            duration = 5000,
-            message  =  _U('your_rank', xPlayer.getGroup())
-        })
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', source, {
+                style  =  'info',
+                duration = 5000,
+                message  =  _U('your_rank', xPlayer.getGroup())
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification( _U('your_rank', xPlayer.getGroup()), false, false, 10000)
+        end
         sendDisc(webhook, _U('rank_hook') .. source, Config.Admin, _U('rank2_hook', xPlayer.getGroup()), 16769280)
     elseif source ~=-1 then
         print(_U('console_id') .. source)
@@ -97,32 +101,48 @@ AddEventHandler('PE-admin:delallvehtime', function()
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         sendDisc(webhook, _U('delvehtime_hook'), Config.VehTime10, _U('delveh_10_hook'), 16390009)
-        TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-            style = 'info', 
-            duration = 5000,
-            message = _U('10_min')
-        })
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
+                style = 'info', 
+                duration = 5000,
+                message = _U('10_min')
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification(_U('10_min'), false, false, 10000)
+        end
         Citizen.Wait(420000)
         sendDisc(webhook, _U('delvehtime_hook'), Config.VehTime3, _U('delveh_3_hook'), 16390009)
-        TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-            style = 'info', 
-            duration = 5000,
-            message = _U('3_min')
-        })
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
+                style = 'info', 
+                duration = 5000,
+                message = _U('3_min')
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification(_U('3_min'), false, false, 10000)
+        end
         Citizen.Wait(150000)
         sendDisc(webhook, _U('delvehtime_hook'), Config.VehTime30, _U('delveh_30s_hook'), 16390009)
-        TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-            style = 'info', 
-            duration = 5000,
-            message = _U('30_sec')
-        })
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
+                style = 'info', 
+                duration = 5000,
+                message = _U('30_sec')
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification(_U('success_delall'), false, false, 10000)
+        end
         Citizen.Wait(30000)
         sendDisc(webhook, _U('delvehtime_hook'), Config.VehTime, _U('delveh2_hook'), 16390009)
-        TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-            style  =  'success',
-            duration = 5000,
-            message  =  _U('success_delall')
-        })
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
+                style  =  'success',
+                duration = 5000,
+                message  =  _U('success_delall')
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification(_U('success_delall'), false, false, 10000)
+        end
         TriggerClientEvent('PE-admin:delallveh', -1)
     end
 end)
@@ -210,11 +230,15 @@ AddEventHandler("PE-admin:weaponPlayer", function(Playerid, name)
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:weaponPlayer", Playerid, name)
-    TriggerClientEvent('t-notify:client:Custom', Playerid, {
-        style = 'info', 
-        duration = 5000,
-        message = _U('weapon_name', name)
-    })
+    if Config.Tnotify then
+        TriggerClientEvent('t-notify:client:Custom', Playerid, {
+            style = 'info',
+            duration = 5000,
+            message = _U('weapon_name', name)
+        })
+    elseif Config.ESX then
+        xPlayer.showHelpNotification(_U('weapon_name', name), false, false, 5000)
+    end
     sendDisc(webhook,  _U('weapon_hook') .. src, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
 end)
 
@@ -237,25 +261,33 @@ AddEventHandler("PE-admin:goto", function(Playerid, name)
                     local targetCoords = xTarget.getCoords()
                     local playerCoords = xPlayer.getCoords()
                     xPlayer.setCoords(targetCoords)
-                    TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
-                        style = 'info', 
-                        duration = 5000,
-                        message = _U('goto_admin', name)
-                    })
-                    TriggerClientEvent('t-notify:client:Custom', xTarget.source, {
-                        style = 'info', 
-                        duration = 5000,
-                        message = _U('goto_player')
-                    })
+                    if Config.Tnotify then
+                        TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
+                            style = 'info', 
+                            duration = 5000,
+                            message = _U('goto_admin', name)
+                        })
+                        TriggerClientEvent('t-notify:client:Custom', xTarget.source, {
+                            style = 'info', 
+                            duration = 5000,
+                            message = _U('goto_player')
+                        })
+                    elseif Config.ESX then
+                        xTarget.showHelpNotification(_U('goto_player', name), false, false, 5000)
+                    end
                     sendDisc(webhook, _U('goto_hook').. xPlayer.source, Config.Goto, _U('goto2_hook', xPlayer.source) .. name, 1872383)
                 end
             end
         else
-            TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
-                style = 'info', 
-                duration = 5000,
-                message = _U('perms_false')
-            })
+            if Config.Tnotify then
+                TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
+                    style = 'info', 
+                    duration = 5000,
+                    message = _U('perms_false')
+                })
+            elseif Config.ESX then
+                xPlayer.showHelpNotification(_U('perms_false'), false, false, 5000)
+            end
         end
     end
 end, false)
