@@ -13,7 +13,7 @@ An admin menu created with esx_menu_default that allows gives you admin commands
 
 ## Getting Started
 
-### Dependencies
+### Optional
 
 * [T-notify](https://github.com/TasoOneAsia/t-notify/releases/)
 
