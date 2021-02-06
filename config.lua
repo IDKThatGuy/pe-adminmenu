@@ -9,7 +9,7 @@ Config.NoClipSpeed  = 1.95
 Config.Icon         = "https://i.imgur.com/RI8z5GG.png"
 Config.Avatar       = "https://i.imgur.com/RI8z5GG.png"
 
--- You can add you own image here if you want (hooks) :)
+-- You can add your own image here if you want (hooks) :)
 Config.ReviveAll    = ""
 Config.Revive       = ""
 Config.Goto         = ""
