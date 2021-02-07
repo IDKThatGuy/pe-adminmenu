@@ -8,6 +8,7 @@ Locales['en'] = {
 
   ['kick_msg']            = 'Everyone has been kicked. \n We hope you come back soon.',
   ['ten_min_close']       = '# **The server is gonna close in 10 min**\n ## Be careful\n',
+  ['ten_min_close_ESX']   = 'The server is gonna close in 10 min\n Be careful\n',
   ['admin_news']          = 'Announcement',
   ['10_min']              = 'All vehicles are gonna be deleted in 10 minutes',
   ['3_min']               = 'All vehicles are gonna be deleted in 3 minutes',
@@ -76,6 +77,8 @@ Locales['en'] = {
   ['kick_id']             = '\n ID: ',
   ['kick_msg2']           = 'You have been kicked from the server ',
   ['your_rank']           = 'Rank: %s',
+  ['your_report']         = '~r~ Report ~w~| ~y~ID: %s ~w~| ~g~MSG: ~w~%s',
+  ['no_report']           = 'Wrong report',
 
   --Notifications
   ['not_alive']           = '❌ | This player is not alive',

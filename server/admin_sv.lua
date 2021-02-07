@@ -1,6 +1,7 @@
 
 PE = {}
 
+-- Add your admins/mods here
 local PEAdmins = {
     'steam:110000118fe7433',
     --'license:',
@@ -10,6 +11,7 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+-- DO NOT TOUCH START
 PE.isAdmin = function()
     local PE_identifier = GetPlayerIdentifiers(src)
     PE_identifier = PE_identifier[1]
@@ -50,39 +52,27 @@ ESX.RegisterServerCallback('PE-admin:playersonline', function(source, cb)
 
 	cb(players)
 end)
+-- DO NOT TOUCH END
 
+-- SERVER OPTIONS START
 RegisterServerEvent('PE-admin:announce')
 AddEventHandler('PE-admin:announce', function()
     local xPlayers    = ESX.GetPlayers()
     sendDisc(webhook, _U('storm_hook'), Config.Storm, _U('storm2_hook'), 9371435)
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
-            style       =  'info',
-            duration    =  10000,
-            title       =  _U('admin_news'),
-            message     =  _U('ten_min_close'),
-            sound       =  true
-        })
-    end
-end)
-
-RegisterCommand("admin", function(source, args, rawCommand)
-	if source ~= 0 then
-		local xPlayer = ESX.GetPlayerFromId(source)
         if Config.Tnotify then
-            TriggerClientEvent('t-notify:client:Custom', source, {
-                style  =  'info',
-                duration = 5000,
-                message  =  _U('your_rank', xPlayer.getGroup())
+            TriggerClientEvent('t-notify:client:Custom', xPlayers[i], {
+                style       =  'info',
+                duration    =  10000,
+                title       =  _U('admin_news'),
+                message     =  _U('ten_min_close'),
+                sound       =  true
             })
         elseif Config.ESX then
-            xPlayer.showHelpNotification( _U('your_rank', xPlayer.getGroup()), false, false, 10000)
+            xPlayer.showHelpNotification(_U('ten_min_close_ESX'), false, false, 10000)
         end
-        sendDisc(webhook, _U('rank_hook') .. source, Config.Admin, _U('rank2_hook', xPlayer.getGroup()), 16769280)
-    elseif source ~=-1 then
-        print(_U('console_id') .. source)
-	end
+    end
 end, false)
 
 RegisterServerEvent('PE-admin:clearchat')
@@ -93,7 +83,7 @@ AddEventHandler('PE-admin:clearchat', function()
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         TriggerClientEvent('PE-admin:clearchat', xPlayers[i], -1)
     end
-end)
+end, false)
 
 RegisterServerEvent('PE-admin:delallvehtime')
 AddEventHandler('PE-admin:delallvehtime', function()
@@ -145,7 +135,7 @@ AddEventHandler('PE-admin:delallvehtime', function()
         end
         TriggerClientEvent('PE-admin:delallveh', -1)
     end
-end)
+end, false)
 
 RegisterServerEvent('PE-admin:delallveh')
 AddEventHandler('PE-admin:delallveh', function()
@@ -155,7 +145,7 @@ AddEventHandler('PE-admin:delallveh', function()
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         TriggerClientEvent('PE-admin:delallveh', -1)
     end
-end)
+end, false)
 
 RegisterServerEvent('PE-admin:delallobj')
 AddEventHandler('PE-admin:delallobj', function()
@@ -165,7 +155,7 @@ AddEventHandler('PE-admin:delallobj', function()
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         TriggerClientEvent('PE-admin:delallobj', -1)
     end
-end)
+end, false)
 
 RegisterServerEvent('PE-admin:delallped')
 AddEventHandler('PE-admin:delallped', function()
@@ -175,7 +165,7 @@ AddEventHandler('PE-admin:delallped', function()
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         TriggerClientEvent('PE-admin:delallped', -1)
     end
-end)
+end, false)
 
 RegisterServerEvent("PE-admin:kickall")
 AddEventHandler("PE-admin:kickall", function(source, name)
@@ -186,7 +176,7 @@ AddEventHandler("PE-admin:kickall", function(source, name)
         DropPlayer(xPlayers[i], _U('kick_msg'))
         sendDisc(webhook, _U('kickall_hook'), Config.KickAll, _U('kickall2_hook', xPlayers[i]), 9371435)
 	end
-end)
+end, false)
 
 RegisterServerEvent("PE-admin:reviveall")
 AddEventHandler("PE-admin:reviveall", function()
@@ -196,8 +186,10 @@ AddEventHandler("PE-admin:reviveall", function()
             TriggerClientEvent('esx_ambulancejob:revive', xPlayers[i])
             sendDisc(webhook, _U('reviveall_hook'), Config.ReviveAll, _U('reviveall2_hook', xPlayers[i] ), 9371435)
 	end
-end)
+end, false)
+-- SERVER OPTIONS END
 
+-- PLAYER OPTIONS START
 RegisterServerEvent("PE-admin:freezePlayer")
 AddEventHandler("PE-admin:freezePlayer", function(Playerid, name)
     local src = source
@@ -205,7 +197,7 @@ AddEventHandler("PE-admin:freezePlayer", function(Playerid, name)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:freezePlayer", Playerid, name)
     sendDisc(webhook,  _U('freeze_hook') .. src, Config.Freeze, _U('freeze2_hook') .. name .. "." .. _U('freeze3_hook') .. Playerid, 1872383)
-end)
+end, false)
 
 RegisterServerEvent("PE-admin:revivePlayer")
 AddEventHandler("PE-admin:revivePlayer", function(Playerid, name)
@@ -214,7 +206,7 @@ AddEventHandler("PE-admin:revivePlayer", function(Playerid, name)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:revivePlayer", Playerid, name)
     sendDisc(webhook,  _U('revive_hook') .. src, Config.Revive, _U('revive2_hook') .. name .. "." .. _U('revive3_hook') .. Playerid, 1872383)
-end)
+end, false)
 RegisterServerEvent("PE-admin:killPlayer")
 AddEventHandler("PE-admin:killPlayer", function(Playerid, name)
     local src = source
@@ -222,7 +214,7 @@ AddEventHandler("PE-admin:killPlayer", function(Playerid, name)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:killPlayer", Playerid)
     sendDisc(webhook,  _U('kill_hook') .. src, Config.Kill, _U('kill2_hook') .. name .. "." .. _U('kill3_hook') .. Playerid, 1872383)
-end)
+end, false)
 
 RegisterServerEvent("PE-admin:weaponPlayer")
 AddEventHandler("PE-admin:weaponPlayer", function(Playerid, name)
@@ -240,13 +232,13 @@ AddEventHandler("PE-admin:weaponPlayer", function(Playerid, name)
         xPlayer.showHelpNotification(_U('weapon_name', name), false, false, 5000)
     end
     sendDisc(webhook,  _U('weapon_hook') .. src, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
-end)
+end, false)
 
 RegisterServerEvent("PE-admin:kickPlayer")
 AddEventHandler("PE-admin:kickPlayer", function(Playerid, name)
     DropPlayer(Playerid, _U('kick_msg2') .. name .. _U('kick_id') .. Playerid)
     sendDisc(webhook, name .. _U('kick_hook'), Config.Kick, _U('kick2_hook') .. Playerid, 1872383)
-end)
+end, false)
 
 -- Ty to esx_adminplus for the goto and bring
 RegisterServerEvent("PE-admin:goto")
@@ -273,6 +265,7 @@ AddEventHandler("PE-admin:goto", function(Playerid, name)
                             message = _U('goto_player')
                         })
                     elseif Config.ESX then
+                        xPlayer.showHelpNotification(_U('goto_admin', name), false, false, 5000)
                         xTarget.showHelpNotification(_U('goto_player', name), false, false, 5000)
                     end
                     sendDisc(webhook, _U('goto_hook').. xPlayer.source, Config.Goto, _U('goto2_hook', xPlayer.source) .. name, 1872383)
@@ -304,28 +297,85 @@ AddEventHandler("PE-admin:bring", function(Playerid, name)
                     local targetCoords = xTarget.getCoords()
                     local playerCoords = xPlayer.getCoords()
                     xTarget.setCoords(playerCoords)
-                    TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
-                        style = 'info', 
-                        duration = 5000,
-                        message = _U('bring_admin', name)
-                    })
-                    TriggerClientEvent('t-notify:client:Custom', xTarget.source, {
-                        style = 'info', 
-                        duration = 5000,
-                        message = _U('bring_player')
-                    })
+                    if Config.Tnotify then
+                        TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
+                            style = 'info', 
+                            duration = 5000,
+                            message = _U('bring_admin', name)
+                        })
+                        TriggerClientEvent('t-notify:client:Custom', xTarget.source, {
+                            style = 'info', 
+                            duration = 5000,
+                            message = _U('bring_player')
+                        })
+                    elseif Config.ESX then
+                        xPlayer.showHelpNotification(_U('bring_admin', name), false, false, 5000)
+                        xTarget.showHelpNotification(_U('bring_player', name), false, false, 5000)
+                    end
                     sendDisc(webhook, _U('bring_hook') .. xPlayer.source, Config.Bring, _U('bring2_hook', xPlayer.source) .. name, 1872383)
                 end
             end
         else
-            TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
-                style = 'info', 
+            if Config.Tnotify then
+                TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
+                    style = 'info', 
+                    duration = 5000,
+                    message = _U('perms_false')
+                })
+            elseif Config.ESX then
+                xPlayer.showHelpNotification(_U('perms_false'), false, false, 5000)
+            end
+        end
+    end
+end)
+-- PLAYER OPTIONS END
+
+-- COMMANDS START
+RegisterCommand("admin", function(source, args, rawCommand)
+	if source ~= 0 then
+		local xPlayer = ESX.GetPlayerFromId(source)
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', source, {
+                style  =  'info',
                 duration = 5000,
-                message = _U('perms_false')
+                message  =  _U('your_rank', xPlayer.getGroup())
             })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification( _U('your_rank', xPlayer.getGroup()), false, false, 10000)
+        end
+        sendDisc(webhook, _U('rank_hook') .. source, Config.Admin, _U('rank2_hook', xPlayer.getGroup()), 16769280)
+    elseif source ~=-1 then
+        print(_U('console_id') .. source)
+	end
+end, false)
+
+--[[RegisterCommand("report", function(source, args, rawCommand)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if args[1] then
+        local msg = string.sub(rawCommand, 8)
+        local xPlayers = ESX.GetPlayers()
+        for i=1, #xPlayers, 1 do
+                local xTarget = ESX.GetPlayerFromId(xPlayers[i])
+                if PE.isAdmin then
+                    if xPlayer.source ~= xTarget.source then
+                        TriggerClientEvent('chatMessage', xTarget.source, _U('your_report', xPlayer.source, msg))
+                    end
+                end
+        end
+        TriggerClientEvent('chatMessage', xPlayer.source, _U('your_report', xPlayer.source, msg))
+    else
+        if Config.Tnotify then
+            TriggerClientEvent('t-notify:client:Custom', xPlayer.source, {
+                style  =  'info',
+                duration = 5000,
+                message  =  _U('your_rank')
+            })
+        elseif Config.ESX then
+            xPlayer.showHelpNotification(_U('no_report'), false, false, 5000)
         end
     end
 end, false)
+]]
 
 AddEventHandler('playerConnecting', function()
     local name = GetPlayerName(source)

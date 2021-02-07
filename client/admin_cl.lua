@@ -918,7 +918,6 @@ AddEventHandler("PE-admin:coords", function()
     end
 end)
 
-
 AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
         ESX.UI.Menu.CloseAll()
