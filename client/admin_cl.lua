@@ -37,73 +37,75 @@ AddEventHandler('PE-admin:checkAdmin', function(state)
     isAdmin = state
 end)
 
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(12)
-		if IsControlJustReleased(0, Config.Key) and isAdmin then 
-			if Config.Tnotify then
+RegisterCommand(Config.Command, function()
+	if isAdmin then
+		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style = 'warning', 
 				message = _U('admin_menu')
 			})
-			elseif Config.ESX then
-				ESX.ShowNotification(_U('admin_menu'), false, false, 0)
-			end
-			AbrirMenuAdministrativo()
-		elseif IsControlJustReleased(0, Config.Key) and not isAdmin then
-			if Config.Tnotify then
+		elseif Config.ESX then
+			ESX.ShowNotification(_U('admin_menu'), false, false, 0)
+		end
+		AbrirMenuAdministrativo()
+	elseif not isAdmin then
+		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style = 'error', 
 				message = _U('perms_false')
 			})
-			elseif Config.ESX then
+		elseif Config.ESX then
 				ESX.ShowNotification(_U('perms_false'), false, false, 0)
+		end
+	end
+end, false)
+
+RegisterKeyMapping(Config.Command, 'Open the admin menu', 'keyboard', Config.Key)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(15)
+		if PE_noclip then
+			local ped = PlayerPedId()
+			local x, y, z = getPos()
+			local px, py, pz = getCamDirection()
+			local speed = Config.NoClipSpeed
+
+
+			if IsControlPressed(0, 32) then
+				x = x + speed * px
+				y = y + speed * py
+				z = z + speed * pz
+
+			elseif IsControlPressed(0, 33) then
+				x = x - speed * px
+				y = y - speed * py
+				z = z - speed * pz
 			end
-		end
-		--Why not just put the local here? For optimization
-        if PE_noclip then
-            local ped = PlayerPedId()
-            local x, y, z = getPos()
-            local px, py, pz = getCamDirection()
-            local speed = Config.NoClipSpeed
-
-
-            if IsControlPressed(0, 32) then
-                x = x + speed * px
-                y = y + speed * py
-                z = z + speed * pz
-  
-			elseif IsControlPressed(0, 33) then
-                x = x - speed * px
-                y = y - speed * py
-                z = z - speed * pz
-            end
 			SetEntityVelocity(ped, 0.05,  0.05,  0.05)
-            SetEntityCoordsNoOffset(ped, x, y, z, true, true, true)
+			SetEntityCoordsNoOffset(ped, x, y, z, true, true, true)
 		end
 
-        if PE_noclipveh then
-            local ped = GetVehiclePedIsIn(PlayerPedId(), false)
-            local x, y, z = getPos()
-            local px, py, pz = getCamDirection()
-            local speed = Config.NoClipSpeed
+		if PE_noclipveh then
+			local ped = GetVehiclePedIsIn(PlayerPedId(), false)
+			local x, y, z = getPos()
+			local px, py, pz = getCamDirection()
+			local speed = Config.NoClipSpeed
 
 
-            if IsControlPressed(0, 32) then
-                x = x + speed * px
-                y = y + speed * py
-                z = z + speed * pz
+			if IsControlPressed(0, 32) then
+				x = x + speed * px
+				y = y + speed * py
+				z = z + speed * pz
 
 			elseif IsControlPressed(0, 33) then
-                x = x - speed * px
-                y = y - speed * py
-                z = z - speed * pz
-            end
+				x = x - speed * px
+				y = y - speed * py
+				z = z - speed * pz
+			end
 			SetEntityVelocity(ped, 0.05,  0.05,  0.05)
-            SetEntityCoordsNoOffset(ped, x, y, z, true, true, true)
-        end
-
+			SetEntityCoordsNoOffset(ped, x, y, z, true, true, true)
+		end
 	end
 end)
 
