@@ -3,7 +3,7 @@ Config          = {}
 
 Config.Locale       = 'en'
 Config.Key          = 'INSERT' -- Key to open the menu. See here: https://docs.fivem.net/docs/game-references/controls/
-Config.Command      = 'admin'
+Config.Command      = 'adm'
 Config.Weapon		= "WEAPON_PISTOL"
 Config.NoClipSpeed  = 1.95
 Config.MenuAlign    = 'right'
