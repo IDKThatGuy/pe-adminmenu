@@ -14,6 +14,8 @@ Locales['es'] = {
   ['30_sec']              = 'Se borraran todos los vehiculos vacios en 30 segundos',
   ['success_delall']      = '✔️ | Se han borrado todos los vehiculos con exito!',
 
+  ['suggest']             = 'Abre el menu de admin',
+
   --Menu
   ['admin_menu_top']      = 'Menu Administrativo',
   ['player_list']         = 'Lista de Jugadores',
