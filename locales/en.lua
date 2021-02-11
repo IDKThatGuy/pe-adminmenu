@@ -15,6 +15,8 @@ Locales['en'] = {
   ['30_sec']              = 'All vehicles are gonna be deleted in 30 seconds',
   ['success_delall']      = '✔️ | All vehicles have been deleted!',
 
+  ['suggest']             = 'Open the admin menu',
+
   --Menu
   ['admin_menu_top']      = 'Admin Menu',
   ['player_list']         = 'Player List',
