@@ -27,6 +27,9 @@ Locales['en'] = {
   ['player_name']         = 'ID: %s',
   ['tp_admin']            = 'Teleport',
 
+  ['alive']               = 'Alive',
+  ['dead']                = 'Dead',
+
   --Server
   ['del_veh_time']        = 'Delete all vehicles (10min)',
   ['del_veh']             = 'Delete all vehicles (insta)',
@@ -120,6 +123,12 @@ Locales['en'] = {
   ['rank2_hook']          = 'The rank of the player is: %s', 
   ['kick_hook']           = ' has been kicked',
   ['kick2_hook']          = 'Was the ID: ',
+
+  ['goto_hook']           = 'ID: ',
+  ['goto2_hook']          = 'The %s went to ',
+  ['bring_hook']          = 'ID: ',
+  ['bring2_hook']         = 'The %s brought ',
+
   ['kickall_hook']        = 'Everyone has been kicked',
   ['kickall2_hook']       = 'IDs: %s',
   ['freeze_hook']         = 'ID: ',

@@ -1,6 +1,9 @@
 
 PE = {}
 
+-- Add your webhook here
+local webhook    = "YOUR_WEBHOOK_HERE"
+
 -- Add your admins/mods here
 local PEAdmins = {
     --'steam:110000118fe7433',
@@ -43,10 +46,11 @@ ESX.RegisterServerCallback('PE-admin:playersonline', function(source, cb)
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
 		table.insert(players, {
-			source     = xPlayer.source,
-			identifier = xPlayer.identifier,
-            name       = xPlayer.name,
-			job        = xPlayer.job
+			source      = xPlayer.source,
+			identifier  = xPlayer.getIdentifier(),
+            name        = xPlayer.get('firstName'),
+			job         = xPlayer.getJob(),
+            group       = xPlayer.getGroup()
 		})
 	end
 
@@ -178,8 +182,8 @@ AddEventHandler("PE-admin:kickall", function(source, name)
 	end
 end, false)
 
-RegisterServerEvent("PE-admin:reviveall")
-AddEventHandler("PE-admin:reviveall", function()
+RegisterServerEvent('PE-admin:reviveall')
+AddEventHandler('PE-admin:reviveall', function()
 	local xPlayers	= ESX.GetPlayers()
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
@@ -190,38 +194,38 @@ end, false)
 -- SERVER OPTIONS END
 
 -- PLAYER OPTIONS START
-RegisterServerEvent("PE-admin:freezePlayer")
-AddEventHandler("PE-admin:freezePlayer", function(Playerid, name)
+RegisterServerEvent('PE-admin:freezePlayer')
+AddEventHandler('PE-admin:freezePlayer', function(Playerid, name)
     local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
-    TriggerClientEvent("PE-admin:freezePlayer", Playerid, name)
+    TriggerClientEvent('PE-admin:freezePlayer', Playerid, name)
     sendDisc(webhook,  _U('freeze_hook') .. src, Config.Freeze, _U('freeze2_hook') .. name .. "." .. _U('freeze3_hook') .. Playerid, 1872383)
 end, false)
 
-RegisterServerEvent("PE-admin:revivePlayer")
-AddEventHandler("PE-admin:revivePlayer", function(Playerid, name)
+RegisterServerEvent('PE-admin:revivePlayer')
+AddEventHandler('PE-admin:revivePlayer', function(Playerid, name)
     local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:revivePlayer", Playerid, name)
     sendDisc(webhook,  _U('revive_hook') .. src, Config.Revive, _U('revive2_hook') .. name .. "." .. _U('revive3_hook') .. Playerid, 1872383)
 end, false)
-RegisterServerEvent("PE-admin:killPlayer")
-AddEventHandler("PE-admin:killPlayer", function(Playerid, name)
+RegisterServerEvent('PE-admin:killPlayer')
+AddEventHandler('PE-admin:killPlayer', function(Playerid, name)
     local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
-    TriggerClientEvent("PE-admin:killPlayer", Playerid)
+    TriggerClientEvent('PE-admin:killPlayer', Playerid)
     sendDisc(webhook,  _U('kill_hook') .. src, Config.Kill, _U('kill2_hook') .. name .. "." .. _U('kill3_hook') .. Playerid, 1872383)
 end, false)
 
-RegisterServerEvent("PE-admin:weaponPlayer")
-AddEventHandler("PE-admin:weaponPlayer", function(Playerid, name)
+RegisterServerEvent('PE-admin:weaponPlayer')
+AddEventHandler('PE-admin:weaponPlayer', function(Playerid, name)
     local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
-    TriggerClientEvent("PE-admin:weaponPlayer", Playerid, name)
+    TriggerClientEvent('PE-admin:weaponPlayer', Playerid, name)
     if Config.Tnotify then
         TriggerClientEvent('t-notify:client:Custom', Playerid, {
             style = 'info',
@@ -234,15 +238,15 @@ AddEventHandler("PE-admin:weaponPlayer", function(Playerid, name)
     sendDisc(webhook,  _U('weapon_hook') .. src, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
 end, false)
 
-RegisterServerEvent("PE-admin:kickPlayer")
-AddEventHandler("PE-admin:kickPlayer", function(Playerid, name)
+RegisterServerEvent('PE-admin:kickPlayer')
+AddEventHandler('PE-admin:kickPlayer', function(Playerid, name)
     DropPlayer(Playerid, _U('kick_msg2') .. name .. _U('kick_id') .. Playerid)
     sendDisc(webhook, name .. _U('kick_hook'), Config.Kick, _U('kick2_hook') .. Playerid, 1872383)
 end, false)
 
 -- Ty to esx_adminplus for the goto and bring
-RegisterServerEvent("PE-admin:goto")
-AddEventHandler("PE-admin:goto", function(Playerid, name)
+RegisterServerEvent('PE-admin:goto')
+AddEventHandler('PE-admin:goto', function(Playerid, name)
 	if source ~= 0 then
         local xPlayer = ESX.GetPlayerFromId(source)
         if PE.isAdmin then
@@ -285,8 +289,8 @@ AddEventHandler("PE-admin:goto", function(Playerid, name)
     end
 end, false)
 
-RegisterServerEvent("PE-admin:bring")
-AddEventHandler("PE-admin:bring", function(Playerid, name)
+RegisterServerEvent('PE-admin:bring')
+AddEventHandler('PE-admin:bring', function(Playerid, name)
 	if source ~= 0 then
         local xPlayer = ESX.GetPlayerFromId(source)
         if PE.isAdmin then
@@ -331,7 +335,7 @@ end)
 -- PLAYER OPTIONS END
 
 -- COMMANDS START
-RegisterCommand("admin", function(source, args, rawCommand)
+RegisterCommand('admin', function(source, args, rawCommand)
 	if source ~= 0 then
 		local xPlayer = ESX.GetPlayerFromId(source)
         if Config.Tnotify then
@@ -390,7 +394,6 @@ AddEventHandler('playerDropped', function()
 end)
 
 function sendDisc(webhook, name, image, message, color)
-    local webhook    = "YOUR_WEBHOOK_HERE"
     local avatar     = Config.Avatar
     local embeds = {
         {

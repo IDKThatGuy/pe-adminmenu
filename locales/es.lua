@@ -26,6 +26,9 @@ Locales['es'] = {
   ['player_name']         = 'ID: %s',
   ['tp_admin']            = 'Teletransporte',
 
+  ['alive']               = 'Vivo',
+  ['dead']                = 'Muerto',
+
   --Server
   ['del_veh_time']        = 'Borrado de coches (10min)',
   ['del_veh']             = 'Borrado de coches (insta)',

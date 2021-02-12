@@ -264,7 +264,7 @@ function AbrirMenuAdministrativo()
 				local elements = {}
 				for i=1, #players, 1 do
 						table.insert(elements, {
-							label = players[i].name,
+							label = players[i].name .. ' | ' .. players[i].source .. ' | ' .. players[i].group .. ' | ' .. (IsPedDeadOrDying(PlayerPedId(i)) and _U('dead') or _U('alive')),
 							value = players[i].source,
 							name = players[i].name,
 							identifier = players[i].identifier
@@ -741,24 +741,24 @@ AddEventHandler('PE-admin:god', function()
 	if isAdmin then
 		PE_god = not PE_god
 		local playerPed = PlayerPedId()
-		SetEntityInvincible(playerPed, not PE_god, true)
+		SetEntityInvincible(playerPed, PE_god, true)
 		if PE_god == true then
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
 					style  =  'error',
-					message  =  _U('god_false')
+					message  =  _U('god_true')
 				})
 			elseif Config.ESX then
-				ESX.ShowNotification(_U('god_false'), false, false, 0)
+				ESX.ShowNotification(_U('god_true'), false, false, 0)
 			end
 		else
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
 					style  =  'success',
-					message  =  _U('god_true')
+					message  =  _U('god_false')
 				})
 			elseif Config.ESX then
-				ESX.ShowNotification(_U('god_true'), false, false, 0)
+				ESX.ShowNotification(_U('god_false'), false, false, 0)
 			end
 		end
 	else
@@ -816,8 +816,8 @@ AddEventHandler('PE-admin:healPlayer', function()
     end
 end)
 
-RegisterNetEvent("PE-admin:clearchat")
-AddEventHandler("PE-admin:clearchat", function()
+RegisterNetEvent('PE-admin:clearchat')
+AddEventHandler('PE-admin:clearchat', function()
 	if isAdmin then
 		TriggerEvent('chat:clear', -1)
 		if Config.Tnotify then
@@ -880,8 +880,8 @@ AddEventHandler('PE-admin:repairVehicle', function()
     end
 end)
 
-RegisterNetEvent("PE-admin:delallveh")
-AddEventHandler("PE-admin:delallveh", function()
+RegisterNetEvent('PE-admin:delallveh')
+AddEventHandler('PE-admin:delallveh', function()
 	if isAdmin then
 		for vehicle in EnumerateVehicles() do
 			if (not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1))) then
@@ -905,8 +905,8 @@ AddEventHandler("PE-admin:delallveh", function()
     end
 end)
 
-RegisterNetEvent("PE-admin:delallobj")
-AddEventHandler("PE-admin:delallobj", function()
+RegisterNetEvent('PE-admin:delallobj')
+AddEventHandler('PE-admin:delallobj', function()
 	for object in EnumerateObjects() do
         SetEntityAsMissionEntity(object, false, false)
 		DeleteObject(object)
@@ -916,8 +916,8 @@ AddEventHandler("PE-admin:delallobj", function()
     end
 end)
 
-RegisterNetEvent("PE-admin:delallped")
-AddEventHandler("PE-admin:delallped", function()
+RegisterNetEvent('PE-admin:delallped')
+AddEventHandler('PE-admin:delallped', function()
 	if isAdmin then
 		for ped in EnumeratePeds() do
 			if not (IsPedAPlayer(ped))then
@@ -937,8 +937,8 @@ AddEventHandler("PE-admin:delallped", function()
     end
 end)
 
-RegisterNetEvent("PE-admin:freezePlayer")
-AddEventHandler("PE-admin:freezePlayer", function()
+RegisterNetEvent('PE-admin:freezePlayer')
+AddEventHandler('PE-admin:freezePlayer', function()
 	if isAdmin then
 		freeze = not freeze
 		local ped = PlayerPedId()
@@ -1040,8 +1040,8 @@ AddEventHandler('PE-admin:weaponPlayer', function()
     end
 end)
 
-RegisterNetEvent("PE-admin:coords")
-AddEventHandler("PE-admin:coords", function()
+RegisterNetEvent('PE-admin:coords')
+AddEventHandler('PE-admin:coords', function()
 	if isAdmin then
 		coords = not coords
 		local x = GetEntityCoords(PlayerPedId())
