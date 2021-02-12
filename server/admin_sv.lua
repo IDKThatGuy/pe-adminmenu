@@ -171,8 +171,8 @@ AddEventHandler('PE-admin:delallped', function()
     end
 end, false)
 
-RegisterServerEvent("PE-admin:kickall")
-AddEventHandler("PE-admin:kickall", function(source, name)
+RegisterServerEvent('PE-admin:kickall')
+AddEventHandler('PE-admin:kickall', function(source, name)
     local src = source
 	local xPlayers	= ESX.GetPlayers()
 	for i=1, #xPlayers, 1 do
