@@ -264,10 +264,9 @@ function AbrirMenuAdministrativo()
 				local elements = {}
 				for i=1, #players, 1 do
 						table.insert(elements, {
-							label = players[i].name .. ' | ' .. players[i].source .. ' | ' .. players[i].group .. ' | ' .. (IsPedDeadOrDying(PlayerPedId(i)) and _U('dead') or _U('alive')),
+							label = players[i].name .. ' | ' .. players[i].source .. ' | ' .. players[i].group,
 							value = players[i].source,
-							name = players[i].name,
-							identifier = players[i].identifier
+							name = players[i].name
 						})
 				end
 				ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'player_list', {

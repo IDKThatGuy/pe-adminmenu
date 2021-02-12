@@ -27,9 +27,6 @@ Locales['en'] = {
   ['player_name']         = 'ID: %s',
   ['tp_admin']            = 'Teleport',
 
-  ['alive']               = 'Alive',
-  ['dead']                = 'Dead',
-
   --Server
   ['del_veh_time']        = 'Delete all vehicles (10min)',
   ['del_veh']             = 'Delete all vehicles (insta)',
@@ -103,7 +100,7 @@ Locales['en'] = {
   ['veh_wait']            = 'Wait, do not move...',
   ['veh_true']            = '✔️ | You have teleported correctly',
   ['veh_false']           = '❌ | No vehicle found',
-  ['weapon_name']         = '🔫 | A weapon has been given to you %s',
+  ['weapon_name']         = '🔫 | A weapon has been given to you',
   ['bring_player']        = '✔️ | An admin brought you',
   ['bring_admin']         = '✔️ | You have brought %s',
   ['goto_player']         = '✔️ | A admin has teleported to you.',

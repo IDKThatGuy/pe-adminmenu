@@ -227,13 +227,13 @@ AddEventHandler('PE-admin:weaponPlayer', function(Playerid, name)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent('PE-admin:weaponPlayer', Playerid, name)
     if Config.Tnotify then
-        TriggerClientEvent('t-notify:client:Custom', Playerid, {
+        TriggerClientEvent('t-notify:client:Custom', source, {
             style = 'info',
             duration = 5000,
-            message = _U('weapon_name', name)
+            message = _U('weapon_name')
         })
     elseif Config.ESX then
-        xPlayer.showHelpNotification(_U('weapon_name', name), false, false, 5000)
+        xPlayer.showHelpNotification(_U('weapon_name'), false, false, 5000)
     end
     sendDisc(webhook,  _U('weapon_hook') .. src, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
 end, false)
