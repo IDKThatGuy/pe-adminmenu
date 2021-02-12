@@ -3,7 +3,7 @@ Locales['en'] = {
   --Basic Notifications
   ['admin_menu']          = '🛡️ | Admin Menu',
   ['perms_false']         = '🛡️ | You cannot see this',
-  ['user_perms']          = '🛡️ | Yoy do not have perms to do this',
+  ['user_perms']          = '🛡️ | You do not have perms to do this',
   ['console_id']          = '🛡️ | You cannot do this since your id is ',
 
   ['kick_msg']            = 'Everyone has been kicked. \n We hope you come back soon.',
@@ -14,6 +14,8 @@ Locales['en'] = {
   ['3_min']               = 'All vehicles are gonna be deleted in 3 minutes',
   ['30_sec']              = 'All vehicles are gonna be deleted in 30 seconds',
   ['success_delall']      = '✔️ | All vehicles have been deleted!',
+
+  ['suggest']             = 'Open the admin menu',
 
   --Menu
   ['admin_menu_top']      = 'Admin Menu',
