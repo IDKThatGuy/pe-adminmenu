@@ -666,8 +666,14 @@ end)
 RegisterNetEvent('PE-admin:noclip')
 AddEventHandler('PE-admin:noclip',function()
 	if isAdmin then
+		ped = PlayerPedId()
 		PE_noclip = not PE_noclip
 		if PE_noclip == true then
+			RequestAnimDict("swimming@base")
+			while not HasAnimDictLoaded("swimming@base") do
+				Citizen.Wait(0)
+			end
+			TaskPlayAnim(ped, "swimming@base", "dive_idle", -25.0, -8.0, -1, 1, 0, false, false, false)
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
 					style  =  'success',
@@ -677,6 +683,7 @@ AddEventHandler('PE-admin:noclip',function()
 				ESX.ShowNotification(_U('noclip_true'), false, false, 0)
 			end
 		else
+			ClearPedTasks(ped)
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
 					style  =  'error',
@@ -944,12 +951,17 @@ AddEventHandler('PE-admin:freezePlayer', function()
 		if freeze == true then
 			SetEntityCollision(ped, false)
 			FreezeEntityPosition(ped, true)
-			SetPlayerInvincible(player, true)
+			SetPlayerInvincible(ped, true)
 			ClearPedTasksImmediately(ped, true)
+			RequestAnimDict("amb@world_human_jog_standing@female@idle_a")
+				while not HasAnimDictLoaded("amb@world_human_jog_standing@female@idle_a") do
+					Citizen.Wait(0)
+				end
+			TaskPlayAnim(ped, "amb@world_human_jog_standing@female@idle_a", "idle_a", -25.0, -8.0, -1, 1, 0, false, false, false)
 		else
 			SetEntityCollision(ped, true)
 			FreezeEntityPosition(ped, false)  
-			SetPlayerInvincible(player, false)
+			SetPlayerInvincible(ped, false)
 			ClearPedTasksImmediately(ped, false)
 		end
 	else

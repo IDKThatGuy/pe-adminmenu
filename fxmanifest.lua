@@ -6,7 +6,7 @@ lua54 'yes'
 
 description 'An admin menu created with esx_menu_default by Project-Entity'
 
-version '2.0.0'
+version '2.0.1'
 
 shared_script {
     'config.lua'
