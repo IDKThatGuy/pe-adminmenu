@@ -888,27 +888,16 @@ end)
 
 RegisterNetEvent('PE-admin:delallveh')
 AddEventHandler('PE-admin:delallveh', function()
-	if isAdmin then
-		for vehicle in EnumerateVehicles() do
-			if (not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1))) then
-				SetVehicleHasBeenOwnedByPlayer(vehicle, false)
-				SetEntityAsMissionEntity(vehicle, false, false)
+	for vehicle in EnumerateVehicles() do
+		if (not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1))) then
+			SetVehicleHasBeenOwnedByPlayer(vehicle, false)
+			SetEntityAsMissionEntity(vehicle, false, false)
+			DeleteVehicle(vehicle)
+			if (DoesEntityExist(vehicle)) then
 				DeleteVehicle(vehicle)
-				if (DoesEntityExist(vehicle)) then
-					DeleteVehicle(vehicle)
-				end
 			end
 		end
-	else
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'error',
-				message  =  _U('user_perms')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
-		end
-    end
+	end
 end)
 
 RegisterNetEvent('PE-admin:delallobj')
@@ -924,131 +913,76 @@ end)
 
 RegisterNetEvent('PE-admin:delallped')
 AddEventHandler('PE-admin:delallped', function()
-	if isAdmin then
-		for ped in EnumeratePeds() do
-			if not (IsPedAPlayer(ped))then
-				DeleteEntity(ped)
-				RemoveAllPedWeapons(ped, true)
-			end
+	for ped in EnumeratePeds() do
+		if not (IsPedAPlayer(ped))then
+			DeleteEntity(ped)
+			RemoveAllPedWeapons(ped, true)
 		end
-	else
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'error',
-				message  =  _U('user_perms')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
-		end
-    end
+	end
 end)
 
 RegisterNetEvent('PE-admin:freezePlayer')
 AddEventHandler('PE-admin:freezePlayer', function()
-	if isAdmin then
-		freeze = not freeze
-		local ped = PlayerPedId()
-		if freeze == true then
-			SetEntityCollision(ped, false)
-			FreezeEntityPosition(ped, true)
-			SetPlayerInvincible(ped, true)
-			ClearPedTasksImmediately(ped, true)
-			RequestAnimDict("amb@world_human_jog_standing@female@idle_a")
-				while not HasAnimDictLoaded("amb@world_human_jog_standing@female@idle_a") do
-					Citizen.Wait(0)
-				end
-			TaskPlayAnim(ped, "amb@world_human_jog_standing@female@idle_a", "idle_a", -25.0, -8.0, -1, 1, 0, false, false, false)
-		else
-			SetEntityCollision(ped, true)
-			FreezeEntityPosition(ped, false)  
-			SetPlayerInvincible(ped, false)
-			ClearPedTasksImmediately(ped, false)
-		end
+	freeze = not freeze
+	local ped = PlayerPedId()
+	if freeze == true then
+		SetEntityCollision(ped, false)
+		FreezeEntityPosition(ped, true)
+		SetPlayerInvincible(ped, true)
+		ClearPedTasksImmediately(ped, true)
+		RequestAnimDict("amb@world_human_jog_standing@female@idle_a")
+			while not HasAnimDictLoaded("amb@world_human_jog_standing@female@idle_a") do
+				Citizen.Wait(0)
+			end
+		TaskPlayAnim(ped, "amb@world_human_jog_standing@female@idle_a", "idle_a", -25.0, -8.0, -1, 1, 0, false, false, false)
 	else
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'error',
-				message  =  _U('user_perms')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
-		end
-    end
+		SetEntityCollision(ped, true)
+		FreezeEntityPosition(ped, false)  
+		SetPlayerInvincible(ped, false)
+		ClearPedTasksImmediately(ped, false)
+	end
 end)
 
 RegisterNetEvent('PE-admin:revivePlayer')
 AddEventHandler('PE-admin:revivePlayer', function()
-	if isAdmin then
-		local ped = PlayerPedId()
-		local player = IsPedFatallyInjured(ped)
-		if player then
-			TriggerEvent('esx_ambulancejob:revive')
-		else
-			if Config.Tnotify then
-				exports['t-notify']:Alert({
-					style  =  'error',
-					message  = _U('not_dead')
-				})
-			elseif Config.ESX then
-				ESX.ShowNotification(_U('not_dead'), false, false, 0)
-			end
-		end
+	local ped = PlayerPedId()
+	local player = IsPedFatallyInjured(ped)
+	if player then
+		TriggerEvent('esx_ambulancejob:revive')
 	else
 		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'error',
-				message  =  _U('user_perms')
+				message  = _U('not_dead')
 			})
 		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
+			ESX.ShowNotification(_U('not_dead'), false, false, 0)
 		end
-    end
+	end
 end)
 
 RegisterNetEvent('PE-admin:killPlayer')
 AddEventHandler('PE-admin:killPlayer', function()
-	if isAdmin then
-		local ped = PlayerPedId()
-		local player = IsPedDeadOrDying(ped, p1)
-		if player then
-			if Config.Tnotify then
-				exports['t-notify']:Alert({
-					style  =  'error',
-					message  = _U('not_alive')
-				})
-			elseif Config.ESX then
-				ESX.ShowNotification(_U('not_alive'), false, false, 0)
-			end
-		else
-			SetEntityHealth(ped, 0)
-		end
-	else
+	local ped = PlayerPedId()
+	local player = IsPedDeadOrDying(ped, p1)
+	if player then
 		if Config.Tnotify then
 			exports['t-notify']:Alert({
 				style  =  'error',
-				message  =  _U('user_perms')
+				message  = _U('not_alive')
 			})
 		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
+			ESX.ShowNotification(_U('not_alive'), false, false, 0)
 		end
-    end
+	else
+		SetEntityHealth(ped, 0)
+	end
 end)
 
 RegisterNetEvent('PE-admin:weaponPlayer')
 AddEventHandler('PE-admin:weaponPlayer', function()
-	if isAdmin then
-		local ped = PlayerPedId()
-		GiveWeaponToPed(ped, Config.Weapon, 250, true, true)
-	else
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'error',
-				message  =  _U('user_perms')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
-		end
-    end
+	local ped = PlayerPedId()
+	GiveWeaponToPed(ped, Config.Weapon, 250, true, true)
 end)
 
 RegisterNetEvent('PE-admin:coords')
