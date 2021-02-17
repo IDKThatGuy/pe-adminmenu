@@ -751,7 +751,7 @@ AddEventHandler('PE-admin:god', function()
 		if PE_god == true then
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
-					style  =  'error',
+					style  =  'success',
 					message  =  _U('god_true')
 				})
 			elseif Config.ESX then
@@ -760,7 +760,7 @@ AddEventHandler('PE-admin:god', function()
 		else
 			if Config.Tnotify then
 				exports['t-notify']:Alert({
-					style  =  'success',
+					style  =  'error',
 					message  =  _U('god_false')
 				})
 			elseif Config.ESX then
