@@ -12,7 +12,7 @@ shared_script 'config.lua'
 
 client_scripts {
     '@es_extended/locale.lua',
-     'locales/es.lua',
+    'locales/es.lua',
     'locales/en.lua',
     'client/admin_cl.lua',
     'client/entityiter.lua'
