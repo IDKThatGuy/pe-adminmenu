@@ -173,7 +173,6 @@ end, false)
 
 RegisterServerEvent('PE-admin:kickall')
 AddEventHandler('PE-admin:kickall', function(source, name)
-    local src = source
 	local xPlayers	= ESX.GetPlayers()
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
@@ -196,33 +195,29 @@ end, false)
 -- PLAYER OPTIONS START
 RegisterServerEvent('PE-admin:freezePlayer')
 AddEventHandler('PE-admin:freezePlayer', function(Playerid, name)
-    local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent('PE-admin:freezePlayer', Playerid, name)
-    sendDisc(webhook,  _U('freeze_hook') .. src, Config.Freeze, _U('freeze2_hook') .. name .. "." .. _U('freeze3_hook') .. Playerid, 1872383)
+    sendDisc(webhook,  _U('freeze_hook') .. source, Config.Freeze, _U('freeze2_hook') .. name .. "." .. _U('freeze3_hook') .. Playerid, 1872383)
 end, false)
 
 RegisterServerEvent('PE-admin:revivePlayer')
 AddEventHandler('PE-admin:revivePlayer', function(Playerid, name)
-    local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent("PE-admin:revivePlayer", Playerid, name)
-    sendDisc(webhook,  _U('revive_hook') .. src, Config.Revive, _U('revive2_hook') .. name .. "." .. _U('revive3_hook') .. Playerid, 1872383)
+    sendDisc(webhook,  _U('revive_hook') .. source, Config.Revive, _U('revive2_hook') .. name .. "." .. _U('revive3_hook') .. Playerid, 1872383)
 end, false)
 RegisterServerEvent('PE-admin:killPlayer')
 AddEventHandler('PE-admin:killPlayer', function(Playerid, name)
-    local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent('PE-admin:killPlayer', Playerid)
-    sendDisc(webhook,  _U('kill_hook') .. src, Config.Kill, _U('kill2_hook') .. name .. "." .. _U('kill3_hook') .. Playerid, 1872383)
+    sendDisc(webhook,  _U('kill_hook') .. source, Config.Kill, _U('kill2_hook') .. name .. "." .. _U('kill3_hook') .. Playerid, 1872383)
 end, false)
 
 RegisterServerEvent('PE-admin:weaponPlayer')
 AddEventHandler('PE-admin:weaponPlayer', function(Playerid, name)
-    local src = source
     local Playerid = tonumber(Playerid)
     local xPlayer = ESX.GetPlayerFromId(source)
     TriggerClientEvent('PE-admin:weaponPlayer', Playerid, name)
@@ -235,7 +230,7 @@ AddEventHandler('PE-admin:weaponPlayer', function(Playerid, name)
     elseif Config.ESX then
         xPlayer.showHelpNotification(_U('weapon_name'), false, false, 5000)
     end
-    sendDisc(webhook,  _U('weapon_hook') .. src, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
+    sendDisc(webhook,  _U('weapon_hook') .. source, Config.WeaponPlayer, _U('weapon2_hook') .. name .. "." .. _U('weapon3_hook') .. Playerid, 1872383)
 end, false)
 
 RegisterServerEvent('PE-admin:kickPlayer')
