@@ -824,7 +824,6 @@ end)
 
 RegisterNetEvent('PE-admin:clearchat')
 AddEventHandler('PE-admin:clearchat', function()
-	if isAdmin then
 		TriggerEvent('chat:clear', -1)
 		if Config.Tnotify then
 			exports['t-notify']:Alert({
@@ -843,7 +842,6 @@ AddEventHandler('PE-admin:clearchat', function()
 		elseif Config.ESX then
 			ESX.ShowNotification(_U('user_perms'), false, false, 0)
 		end
-    end
 end)
 
 RegisterNetEvent('PE-admin:repairVehicle')
