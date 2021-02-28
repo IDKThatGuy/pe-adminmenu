@@ -164,7 +164,7 @@ end, false)
 RegisterServerEvent('PE-admin:delallped')
 AddEventHandler('PE-admin:delallped', function()
     local xPlayers    = ESX.GetPlayers()
-    sendDisc(webhook, _U('delobj_hook'), Config.Obj, _U('delobj2_hook'), 9371435)
+    sendDisc(webhook, _U('delped_hook'), Config.Obj, _U('delped2_hook'), 9371435)
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         TriggerClientEvent('PE-admin:delallped', -1)
