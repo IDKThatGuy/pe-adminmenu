@@ -824,24 +824,15 @@ end)
 
 RegisterNetEvent('PE-admin:clearchat')
 AddEventHandler('PE-admin:clearchat', function()
-		TriggerEvent('chat:clear', -1)
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'info',
-				message  =  _U('chat_false')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('chat_false'), false, false, 0)
-		end
-	else
-		if Config.Tnotify then
-			exports['t-notify']:Alert({
-				style  =  'error',
-				message  =  _U('user_perms')
-			})
-		elseif Config.ESX then
-			ESX.ShowNotification(_U('user_perms'), false, false, 0)
-		end
+	TriggerEvent('chat:clear', -1)
+	if Config.Tnotify then
+		exports['t-notify']:Alert({
+			style  =  'info',
+			message  =  _U('chat_false')
+		})
+	elseif Config.ESX then
+		ESX.ShowNotification(_U('chat_false'), false, false, 0)
+	end
 end)
 
 RegisterNetEvent('PE-admin:repairVehicle')
