@@ -6,8 +6,8 @@ local webhook    = "YOUR_WEBHOOK_HERE"
 
 -- Add your admins/mods here
 local PEAdmins = {
-    --'steam:110000118fe7433',
-    --'license:038eb1b61e51704908589609a190bee3669e0442',
+    --'steam:110000118fe7433', or 
+    --'license:038eb1b61e51704908589609a190bee3669e0442'
 }
 
 ESX = nil 
